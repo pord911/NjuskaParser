@@ -1,3 +1,4 @@
+package com.webparser.posts;
 /**
  * Created by pord911 on 5.6.2017..
  */

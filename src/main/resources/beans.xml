@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.webparser"/>
+    <bean id="njuskaloFlatTitle" class="com.webparser.njuskaloparser.Title">
+        <property name="parsingConfig">
+            <props>
+                <prop key="elAttribute">class</prop>
+                <prop key="attrValue">entity-title</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="njuskaloFlatArea" class="com.webparser.njuskaloparser.Area">
+        <property name="parsingConfig">
+            <props>
+                <prop key="areaAttr">class</prop>
+                <prop key="areaAttrVal">entity-description-main</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="njuskaloFlatLink" class="com.webparser.njuskaloparser.Link">
+        <property name="parsingConfig">
+            <props>
+                <prop key="linkAttr">class</prop>
+                <prop key="linkAttrVal">entity-title</prop>
+                <prop key="linkMatchAttr">href</prop>
+                <prop key="linkMatchAttrVal">nekretnine</prop>
+
+            </props>
+        </property>
+    </bean>
+    <bean id="njuskaloFlatPrice" class="com.webparser.njuskaloparser.Price">
+        <property name="parsingConfig">
+            <props>
+                <prop key="priceAttr">class</prop>
+                <prop key="priceAttrVal">price price--eur</prop>
+            </props>
+        </property>
+    </bean>
+</beans>
