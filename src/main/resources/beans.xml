@@ -8,8 +8,12 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.webparser"/>
-    <bean id="njuskaloFlatTitle" class="com.webparser.njuskaloparser.Title">
+    <context:component-scan base-package="com.webpostparser"/>
+    <context:property-placeholder location="jdbc.properties"/>
+
+    <!-- www.njuskalo.hr parsing beans and parameters -->
+
+    <bean id="njuskaloFlatTitle" class="com.webpostparser.parserservice.parsers.Title">
         <property name="parsingConfig">
             <props>
                 <prop key="elAttribute">class</prop>
@@ -17,26 +21,27 @@
             </props>
         </property>
     </bean>
-    <bean id="njuskaloFlatArea" class="com.webparser.njuskaloparser.Area">
+    <bean id="njuskaloFlatArea" class="com.webpostparser.parserservice.parsers.Area">
         <property name="parsingConfig">
             <props>
                 <prop key="areaAttr">class</prop>
                 <prop key="areaAttrVal">entity-description-main</prop>
+                <prop key="regex">Stambena površina: ((\d+\.\d+)|(\d+))</prop>
             </props>
         </property>
     </bean>
-    <bean id="njuskaloFlatLink" class="com.webparser.njuskaloparser.Link">
+    <bean id="njuskaloFlatLink" class="com.webpostparser.parserservice.parsers.Link">
         <property name="parsingConfig">
             <props>
                 <prop key="linkAttr">class</prop>
                 <prop key="linkAttrVal">entity-title</prop>
                 <prop key="linkMatchAttr">href</prop>
                 <prop key="linkMatchAttrVal">nekretnine</prop>
-
+                <prop key="webpage">www.njuskalo.hr</prop>
             </props>
         </property>
     </bean>
-    <bean id="njuskaloFlatPrice" class="com.webparser.njuskaloparser.Price">
+    <bean id="njuskaloFlatPrice" class="com.webpostparser.parserservice.parsers.Price">
         <property name="parsingConfig">
             <props>
                 <prop key="priceAttr">class</prop>
@@ -44,4 +49,82 @@
             </props>
         </property>
     </bean>
+    <bean id="njuskaloFlatImage" class="com.webpostparser.parserservice.parsers.Image">
+        <property name="parsingConfig">
+            <props>
+                <prop key="imageAttr">data-src</prop>
+                <prop key="imageAttrVal">www.njuskalo.hr</prop>
+                <prop key="regex">www.njuskalo.hr.*</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- www.index.hr parsing beans and parameters -->
+
+    <bean id="indexFlatTitle" class="com.webpostparser.parserservice.parsers.Title">
+        <property name="parsingConfig">
+            <props>
+                <prop key="elAttribute">class</prop>
+                <prop key="attrValue">title</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="indexFlatArea" class="com.webpostparser.parserservice.parsers.Area">
+        <property name="parsingConfig">
+            <props>
+                <prop key="areaAttr">class</prop>
+                <prop key="areaAttrVal">tags</prop>
+                <prop key="regex">m2 : ((\d+\.\d+)|(\d+))</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="indexFlatLink" class="com.webpostparser.parserservice.parsers.Link">
+        <property name="parsingConfig">
+            <props>
+                <prop key="linkAttr">class</prop>
+                <prop key="linkAttrVal">result</prop>
+                <prop key="linkMatchAttr">href</prop>
+                <prop key="linkMatchAttrVal">oglasi</prop>
+                <prop key="webpage"></prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="indexFlatPrice" class="com.webpostparser.parserservice.parsers.Price">
+        <property name="parsingConfig">
+            <props>
+                <prop key="priceAttr">class</prop>
+                <prop key="priceAttrVal">price</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="indexFlatImage" class="com.webpostparser.parserservice.parsers.Image">
+        <property name="parsingConfig">
+            <props>
+                <prop key="imageAttr">data-src</prop>
+                <prop key="imageAttrVal">www.index.hr</prop>
+                <prop key="regex">www.index.hr.*</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="indexParser" class="com.webpostparser.parserservice.parsers.IndexParser">
+        <property name="indexComodityIdMap">
+            <props>
+                <prop key="flat">prodaja-stanova/gid/3278</prop>
+            </props>
+        </property>
+        <property name="indexLocationIdMap">
+            <props>
+                <prop key="zagreb">1153</prop>
+            </props>
+        </property>
+    </bean>  <!-- Flat comodity ID for index.hr page -->
+
+    <bean id="dataSource"
+          class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
 </beans>

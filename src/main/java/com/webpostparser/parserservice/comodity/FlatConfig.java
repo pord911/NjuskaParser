@@ -1,4 +1,4 @@
-package com.webparser.comodity;
+package com.webpostparser.parserservice.comodity;
 
 /**
  * Created by pord on 12.06.17..

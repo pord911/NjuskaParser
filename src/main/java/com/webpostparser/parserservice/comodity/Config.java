@@ -1,7 +1,11 @@
-package com.webparser.comodity;
+package com.webpostparser.parserservice.comodity;
 
 /**
- * Created by pord on 15.06.17..
+ * Created by Domagoj Pordan on 15.06.17..
+ */
+
+/**
+ * Abstract class for setting request configuration
  */
 public abstract class Config {
     public String getMinArea() { return null; }
