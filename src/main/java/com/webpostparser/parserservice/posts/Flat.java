@@ -12,12 +12,29 @@ public class Flat {
     String title;
     String link;
     String imageLink;
+    String city;
+    String linkHash;
     double area;
     double price;
-    String linkHash;
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public String getLinkHash() {
         return linkHash;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public void setLinkHash(String linkHash) {
+        this.linkHash = linkHash;
     }
 
     public String getImageLink() {
@@ -34,20 +51,6 @@ public class Flat {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    /**
-     * Set link string and calculate and set link hash string.
-     * @param link                          Link
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
-     */
-    public void setLinkAndCalculateHash(String link) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        this.link = link;
-        byte[] linkBytes = link.getBytes("UTF-8");
-        MessageDigest digest = MessageDigest.getInstance("MD5");
-        byte[] mdVal = digest.digest(linkBytes);
-        linkHash = DatatypeConverter.printHexBinary(mdVal);
     }
 
     public void setArea(double area) {

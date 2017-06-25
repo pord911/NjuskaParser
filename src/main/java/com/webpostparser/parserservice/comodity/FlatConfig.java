@@ -8,21 +8,22 @@ public class FlatConfig extends Config {
     String maxArea;
     String minPrice;
     String maxPrice;
-    String location;
-    String neighbourHood;
+    String city;
+
+    public FlatConfig(String city) {
+        this.city = city;
+    }
 
     public FlatConfig(String minArea,
                       String maxArea,
                       String minPrice,
                       String maxPrice,
-                      String location,
-                      String neighbourHood) {
+                      String city) {
         this.minArea = minArea;
         this.maxArea = maxArea;
         this.minPrice = minPrice;
         this.maxPrice = maxPrice;
-        this.location = location;
-        this.neighbourHood = neighbourHood;
+        this.city = city;
     }
 
     @Override
@@ -62,20 +63,12 @@ public class FlatConfig extends Config {
     }
 
     @Override
-    public String getLocation() {
-        return location;
+    public String getCity() {
+        return city;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    @Override
-    public String getNeighbourHood() {
-        return neighbourHood;
-    }
-
-    public void setNeighbourHood(String neighbourHood) {
-        this.neighbourHood = neighbourHood;
-    }
 }

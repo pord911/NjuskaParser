@@ -116,7 +116,7 @@
                 <prop key="zagreb">1153</prop>
             </props>
         </property>
-    </bean>  <!-- Flat comodity ID for index.hr page -->
+    </bean> <!--  Flat comodity ID for index.hr page -->
 
     <bean id="dataSource"
           class="org.apache.commons.dbcp.BasicDataSource"

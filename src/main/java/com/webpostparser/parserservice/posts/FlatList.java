@@ -1,31 +1,31 @@
 package com.webpostparser.parserservice.posts;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by pord on 11.06.17..
  */
 public class FlatList {
-    LinkedList<Flat> flatList;
-
+    HashMap<String, Flat> flatList;
     public FlatList() {
-        flatList = new LinkedList<Flat>();
+        flatList = new HashMap<String, Flat>();
     }
 
     public void add(Flat post) {
-        flatList.add(post);
+        if (post.getLinkHash() == null) {
+            System.out.println("Cannot store post element, no link hash available.");
+            return;
+        }
+        if (flatList.put(post.getLinkHash(), post) != null)
+            System.out.println("Skipping duplicate element, title: " + post.getTitle() +
+                   ", link: " + post.getLink() + ", link hash: " + post.getLinkHash());
     }
 
-    public List<Flat> getList() {
-        return flatList;
+    public Collection<Flat> getList() {
+        return flatList.values();
     }
 
     public boolean isListEmpty() {
         return flatList.isEmpty();
-    }
-
-    public Flat getLastElement() {
-        return flatList.getLast();
     }
 }

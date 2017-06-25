@@ -6,6 +6,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.context.ApplicationContext;
 
+import javax.xml.bind.DatatypeConverter;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -86,5 +90,20 @@ public class ParseHelper {
                 return null;
 
         }
+    }
+
+    /**
+     * Calculate link hash string.
+     * @param link                          Link
+     * @throws UnsupportedEncodingException
+     * @throws NoSuchAlgorithmException
+     */
+    public static String calculateHash(String link)
+            throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        byte[] linkBytes = link.getBytes("UTF-8");
+        MessageDigest digest = MessageDigest.getInstance("MD5");
+        byte[] mdVal = digest.digest(linkBytes);
+
+        return DatatypeConverter.printHexBinary(mdVal);
     }
 }

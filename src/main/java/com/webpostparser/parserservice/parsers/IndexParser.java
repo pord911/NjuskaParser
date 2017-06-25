@@ -47,7 +47,6 @@ public class IndexParser implements WebParser, ApplicationContextAware {
      * @param applicationContext  Application context
      * @throws BeansException
      */
-    @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
@@ -58,7 +57,6 @@ public class IndexParser implements WebParser, ApplicationContextAware {
      * @param config   Url parameters
      * @return         URL
      */
-    @Override
     public String constructUrl(ComodityType comodityType, Config config) {
         return constructUrl(comodityType, config, 1);
     }
@@ -69,27 +67,22 @@ public class IndexParser implements WebParser, ApplicationContextAware {
      * @param pageNum   Particular web page number
      * @return          URL
      */
-    @Override
     public String constructUrl(ComodityType comodityType, Config config, int pageNum) {
         StringBuilder buildUrl = new StringBuilder("http://www.index.hr/oglasi/");
 
         /* TODO: Check for location area and city location, they should be separate
          * in Config, check njuskalo */
         buildUrl.append(getComodityId(comodityType));
-        buildUrl.append("?pojamZup=").append(getLocationId(config.getLocation()));
-        buildUrl.append("&tipoglasa=1&sortby=1&elementsNum=10&grad=0&naselje=0&cijenaod=").append(config.getMinPrice());
+        buildUrl.append("?pojamZup=").append(getLocationId(config.getCity()));
+        buildUrl.append("&tipoglasa=1&sortby=1&elementsNum=10&grad=0&naselje=0&cijenaod=0");
         buildUrl.append("&cijenado=6000000");
-        //buildUrl.append("&attr_Int_988=").append(config.getMinArea());
-        //buildUrl.append("&attr_Int_887=").append(config.getMaxArea());
-        if (pageNum != 0)
-            buildUrl.append("&vezani_na=988-887_562-563_978-1334&num=").append(pageNum);
+        buildUrl.append("&vezani_na=988-887_562-563_978-1334&num=").append(pageNum);
 
         System.out.println("Built index.hr url: " + buildUrl.toString());
         return buildUrl.toString();
     }
 
     //Deprecated
-    @Override
     public int getPageNumber(String url) throws IOException {
         return 0;
     }
@@ -100,7 +93,6 @@ public class IndexParser implements WebParser, ApplicationContextAware {
      * @return             JSoup Elements
      * @throws IOException
      */
-    @Override
     public Elements getElements(String url) throws IOException {
         Document doc;
         doc = Jsoup.connect(url).get();
@@ -115,7 +107,6 @@ public class IndexParser implements WebParser, ApplicationContextAware {
      * @param element         JSoup element
      * @return                Parsed value as an Object
      */
-    @Override
     public Object getValueForComodity(ComodityType comodityType, ComodityValue comodityValue, Element element) {
         switch (comodityType) {
             case FLAT:
@@ -130,7 +121,6 @@ public class IndexParser implements WebParser, ApplicationContextAware {
      * @param webPage  Web page name.
      * @return         True or False
      */
-    @Override
     public boolean isWebPage(String webPage) {
         return WEB_PAGE.equals(webPage);
     }

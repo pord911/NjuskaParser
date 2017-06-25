@@ -25,6 +25,15 @@ public class NjuskaloParser implements WebParser, ApplicationContextAware {
     final String WEB_PAGE = "njuskalo";
 
     /**
+     * Set spring application context
+     * @param applicationContext  Spring application context
+     * @throws BeansException
+     */
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.context = applicationContext;
+    }
+
+    /**
      * Return an object representing the parsed value for
      * a particular comodity.
      * @param comodityType    Type of comodity
@@ -46,7 +55,6 @@ public class NjuskaloParser implements WebParser, ApplicationContextAware {
      * @param webPage  Web page name.
      * @return         True or False
      */
-    @Override
     public boolean isWebPage(String webPage) {
         return WEB_PAGE.equals(webPage);
     }
@@ -71,7 +79,7 @@ public class NjuskaloParser implements WebParser, ApplicationContextAware {
     public String constructUrl(ComodityType type, Config config, int pageNum) {
         switch(type) {
             case FLAT:
-                return constructFlatUrl(config, pageNum);
+                return constructFlatUrl("prodaja-stanova", config, pageNum);
             default:
                 return null;
         }
@@ -83,15 +91,10 @@ public class NjuskaloParser implements WebParser, ApplicationContextAware {
      * @param pageNum   Particular web page number
      * @return          URL
      */
-    private String constructFlatUrl(Config config, int pageNum) {
+    private String constructFlatUrl(String linkText, Config config, int pageNum) {
         StringBuilder buildUrl = new StringBuilder("http://www.njuskalo.hr/");
-        buildUrl.append("prodaja-stanova").append("/").append(config.getLocation());
-        buildUrl.append("?price%5Bmin%5D=").append(config.getMinPrice());
-        buildUrl.append("&price%5Bmax%5D=").append(config.getMaxPrice());
-        buildUrl.append("&mainArea%5Bmin%5D=").append(config.getMinArea());
-        buildUrl.append("&mainArea%5Bmax%5D=").append(config.getMaxArea());
-        if (pageNum != 0)
-            buildUrl.append("&page=").append(pageNum);
+        buildUrl.append(linkText).append("/").append(config.getCity());
+        buildUrl.append("&page=").append(pageNum);
         System.out.println("Built njuskalo url: " + buildUrl.toString());
         return buildUrl.toString();
     }
@@ -118,15 +121,5 @@ public class NjuskaloParser implements WebParser, ApplicationContextAware {
         Document doc;
         doc = Jsoup.connect(url).get();
         return doc.getElementsByTag("article");
-    }
-
-    /**
-     * Set spring application context
-     * @param applicationContext  Application context
-     * @throws BeansException
-     */
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.context = applicationContext;
     }
 }

@@ -16,7 +16,7 @@ public abstract class Config {
 
     public String getMaxPrice() { return null; }
 
-    public String getLocation() { return null; }
+    public String getCity() { return null; }
 
     public String getNeighbourHood() { return null; }
 }
