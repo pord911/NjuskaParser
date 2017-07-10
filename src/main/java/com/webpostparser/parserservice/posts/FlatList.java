@@ -3,25 +3,26 @@ package com.webpostparser.parserservice.posts;
 import java.util.*;
 
 /**
- * Created by pord on 11.06.17..
+ * Created by Domagoj Pordan on 11.06.17..
  */
-public class FlatList {
-    HashMap<String, Flat> flatList;
+public class FlatList implements CommodityList {
+    HashMap<String, CommodityPost> flatList;
     public FlatList() {
-        flatList = new HashMap<String, Flat>();
+        flatList = new HashMap<String, CommodityPost>();
     }
 
-    public void add(Flat post) {
-        if (post.getLinkHash() == null) {
+    public void add(CommodityPost post) {
+        Flat flatPost = (Flat)post.getObject();
+        if (flatPost.getLinkHash() == null) {
             System.out.println("Cannot store post element, no link hash available.");
             return;
         }
-        if (flatList.put(post.getLinkHash(), post) != null)
-            System.out.println("Skipping duplicate element, title: " + post.getTitle() +
-                   ", link: " + post.getLink() + ", link hash: " + post.getLinkHash());
+        if (flatList.put(flatPost.getLinkHash(), post) != null)
+            System.out.println("Skipping duplicate element, title: " + flatPost.getTitle() +
+                   ", link: " + flatPost.getLink() + ", link hash: " + flatPost.getLinkHash());
     }
 
-    public Collection<Flat> getList() {
+    public Collection<CommodityPost> getList() {
         return flatList.values();
     }
 

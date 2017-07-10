@@ -8,5 +8,6 @@ public enum ComodityValue {
     PRICE,
     AREA,
     LINK,
-    IMAGE
+    IMAGE,
+    DATE
 }

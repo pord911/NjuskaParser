@@ -1,24 +1,39 @@
 package com.webpostparser.parserservice.posts;
 
-import javax.xml.bind.DatatypeConverter;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 /**
- * Created by Domagoj Pordan on 5.6.2017..
+ * Created by Domagoj Pordan on 08.07.17..
  */
-public class Flat {
+public class Flat implements CommodityPost {
+
     String title;
     String link;
     String imageLink;
     String city;
     String linkHash;
+    String flatType;
+    String date;
     double area;
     double price;
 
+    public String getDate() {
+        return date;
+    }
+
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public String getCity() {
         return city;
+    }
+
+    public String getFlatType() {
+        return flatType;
+    }
+
+    public void setFlatType(String flatType) {
+        this.flatType = flatType;
     }
 
     public void setCity(String city) {
@@ -71,5 +86,9 @@ public class Flat {
 
     public double getPrice() {
         return price;
+    }
+
+    public Object getObject() {
+        return this;
     }
 }

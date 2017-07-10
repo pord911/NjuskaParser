@@ -1,6 +1,5 @@
 package com.webpostparser.parserservice.parsers;
 
-import com.webpostparser.parserservice.comodity.Config;
 import com.webpostparser.parserservice.comodity.ComodityType;
 import com.webpostparser.parserservice.comodity.ComodityValue;
 import com.webpostparser.parserservice.parsehelpers.ParseHelper;
@@ -59,27 +58,18 @@ public class NjuskaloParser implements WebParser, ApplicationContextAware {
         return WEB_PAGE.equals(webPage);
     }
 
-    /**
-     * Construct a www.njuskalo.hr url
-     * @param type    Type of commodity
-     * @param config  Url parameters
-     * @return        URL
-     */
-    public String constructUrl(ComodityType type, Config config) {
-        return constructUrl(type, config, 1);
-    }
 
     /**
      * Construct a www.njuskalo.hr url
      * @param type     Type of commodity
-     * @param config   Url parameters
+     * @param city      Which city for pulling web pages
      * @param pageNum  Particular web page number
      * @return         URL
      */
-    public String constructUrl(ComodityType type, Config config, int pageNum) {
+    public String constructUrl(ComodityType type, String city, int pageNum) {
         switch(type) {
             case FLAT:
-                return constructFlatUrl("prodaja-stanova", config, pageNum);
+                return constructFlatUrl("prodaja-stanova", city, pageNum);
             default:
                 return null;
         }
@@ -87,13 +77,13 @@ public class NjuskaloParser implements WebParser, ApplicationContextAware {
 
     /**
      * Construct a www.njuskalo.hr URL for returning flat posts
-     * @param config    URL parameters
+     * @param city      Which city for pulling web pages
      * @param pageNum   Particular web page number
      * @return          URL
      */
-    private String constructFlatUrl(String linkText, Config config, int pageNum) {
+    private String constructFlatUrl(String linkText, String city, int pageNum) {
         StringBuilder buildUrl = new StringBuilder("http://www.njuskalo.hr/");
-        buildUrl.append(linkText).append("/").append(config.getCity());
+        buildUrl.append(linkText).append("/").append(city);
         buildUrl.append("&page=").append(pageNum);
         System.out.println("Built njuskalo url: " + buildUrl.toString());
         return buildUrl.toString();

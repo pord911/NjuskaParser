@@ -2,7 +2,6 @@ package com.webpostparser.parserservice.parsers;
 
 import com.webpostparser.parserservice.comodity.ComodityType;
 import com.webpostparser.parserservice.comodity.ComodityValue;
-import com.webpostparser.parserservice.comodity.Config;
 import com.webpostparser.parserservice.parsehelpers.ParseHelper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -52,28 +51,18 @@ public class IndexParser implements WebParser, ApplicationContextAware {
     }
 
     /**
-     * Construct a www.njuskalo.hr url
-     * @param comodityType     Type of commodity
-     * @param config   Url parameters
-     * @return         URL
-     */
-    public String constructUrl(ComodityType comodityType, Config config) {
-        return constructUrl(comodityType, config, 1);
-    }
-
-    /**
      * Construct a www.njuskalo.hr URL for returning flat posts
-     * @param config    URL parameters
+     * @param city      City from which to pull web pages
      * @param pageNum   Particular web page number
      * @return          URL
      */
-    public String constructUrl(ComodityType comodityType, Config config, int pageNum) {
+    public String constructUrl(ComodityType comodityType, String city, int pageNum) {
         StringBuilder buildUrl = new StringBuilder("http://www.index.hr/oglasi/");
 
         /* TODO: Check for location area and city location, they should be separate
          * in Config, check njuskalo */
         buildUrl.append(getComodityId(comodityType));
-        buildUrl.append("?pojamZup=").append(getLocationId(config.getCity()));
+        buildUrl.append("?pojamZup=").append(getLocationId(city));
         buildUrl.append("&tipoglasa=1&sortby=1&elementsNum=10&grad=0&naselje=0&cijenaod=0");
         buildUrl.append("&cijenado=6000000");
         buildUrl.append("&vezani_na=988-887_562-563_978-1334&num=").append(pageNum);
@@ -134,6 +123,8 @@ public class IndexParser implements WebParser, ApplicationContextAware {
         switch (comodityType) {
             case FLAT:
                 return indexComodityIdMap.get("flat");
+            case HOUSE:
+                return indexComodityIdMap.get("house");
             default:
                 return null;
         }

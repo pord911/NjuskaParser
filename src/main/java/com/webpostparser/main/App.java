@@ -1,6 +1,7 @@
 package com.webpostparser.main;
 
-import com.webpostparser.processor.FlatProcessor;
+import com.webpostparser.parserservice.comodity.ComodityType;
+import com.webpostparser.processor.PostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -16,7 +17,7 @@ public class App {
     
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
-        FlatProcessor processor = (FlatProcessor)ctx.getBean(FlatProcessor.class);
-        processor.processFlats();
+        PostProcessor processor = (PostProcessor)ctx.getBean(PostProcessor.class);
+        processor.processPosts(ComodityType.FLAT);
     }
 }

@@ -58,6 +58,14 @@
             </props>
         </property>
     </bean>
+    <bean id="njuskaloFlatDate" class="com.webpostparser.parserservice.parsers.ParserDate">
+        <property name="parsingConfig">
+            <props>
+                <prop key="dateAttr">pubdate</prop>
+                <prop key="dateAttrVal">pubdate</prop>
+            </props>
+        </property>
+    </bean>
     <!-- www.index.hr parsing beans and parameters -->
 
     <bean id="indexFlatTitle" class="com.webpostparser.parserservice.parsers.Title">
@@ -105,10 +113,20 @@
             </props>
         </property>
     </bean>
+    <bean id="indexFlatDate" class="com.webpostparser.parserservice.parsers.ParserDate">
+        <property name="parsingConfig">
+            <props>
+                <prop key="dateAttr">class</prop>
+                <prop key="dateAttrVal">icon-time</prop>
+                <prop key="regex">(\d+\.\d+\.\d+)|Objavljeno</prop>
+            </props>
+        </property>
+    </bean>
     <bean id="indexParser" class="com.webpostparser.parserservice.parsers.IndexParser">
         <property name="indexComodityIdMap">
             <props>
                 <prop key="flat">prodaja-stanova/gid/3278</prop>
+                <prop key="house">prodaja-kuca/gid/3278</prop>
             </props>
         </property>
         <property name="indexLocationIdMap">
@@ -116,7 +134,7 @@
                 <prop key="zagreb">1153</prop>
             </props>
         </property>
-    </bean> <!--  Flat comodity ID for index.hr page -->
+    </bean>   <!-- Flat comodity ID for index.hr page -->
 
     <bean id="dataSource"
           class="org.apache.commons.dbcp.BasicDataSource"

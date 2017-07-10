@@ -86,6 +86,9 @@ public class ParseHelper {
             case IMAGE:
                 Image image = (Image)context.getBean(beanId + "Image");
                 return image.getImageLink(element);
+            case DATE:
+                ParserDate date = (ParserDate)context.getBean(beanId + "Date");
+                return date.getDate(element);
             default:
                 return null;
 
