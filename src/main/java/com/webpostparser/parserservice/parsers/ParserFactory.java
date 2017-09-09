@@ -1,29 +1,24 @@
 package com.webpostparser.parserservice.parsers;
 
 import com.webpostparser.parserservice.comodity.ComodityType;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * Created by Domagoj Pordan on 08.07.17..
  */
-@Component
-public class ParserFactory implements ApplicationContextAware {
+@Configuration
+public class ParserFactory {
 
-    private static ApplicationContext context;
+    @Autowired
+    PropertyParser propertyParser;
 
-    public Parser getParser(ComodityType type) {
+    public Parser createParser(ComodityType type) {
         switch (type) {
             case HOUSE:
             case FLAT:
-                return context.getBean(FlatParser.class);
+                return propertyParser;
         }
         return null;
-    }
-
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        context = applicationContext;
     }
 }

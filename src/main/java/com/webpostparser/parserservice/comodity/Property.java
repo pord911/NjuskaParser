@@ -1,24 +1,36 @@
-package com.webpostparser.parserservice.posts;
+package com.webpostparser.parserservice.comodity;
+
+import com.webpostparser.parserservice.parsehelpers.LinkHashHelper;
 
 /**
  * Created by Domagoj Pordan on 08.07.17..
  */
-public class Flat implements CommodityPost {
+
+public class Property extends Commodity {
+    LinkHashHelper linkHashHelper;
 
     String title;
     String link;
     String imageLink;
     String city;
-    String linkHash;
+    int linkHash = 0;
     String flatType;
     String date;
     double area;
     double price;
 
+    public Property(String link, LinkHashHelper linkHashHelper) {
+        this.link = link;
+        this.linkHashHelper = linkHashHelper;
+    }
+
+    public void init() {
+        this.linkHash = linkHashHelper.getHashValueOfString(link);
+    }
+
     public String getDate() {
         return date;
     }
-
 
     public void setDate(String date) {
         this.date = date;
@@ -28,7 +40,7 @@ public class Flat implements CommodityPost {
         return city;
     }
 
-    public String getFlatType() {
+    public String getType() {
         return flatType;
     }
 
@@ -38,18 +50,6 @@ public class Flat implements CommodityPost {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public String getLinkHash() {
-        return linkHash;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public void setLinkHash(String linkHash) {
-        this.linkHash = linkHash;
     }
 
     public String getImageLink() {
@@ -88,7 +88,20 @@ public class Flat implements CommodityPost {
         return price;
     }
 
-    public Object getObject() {
-        return this;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Property flat = (Property) o;
+
+        if (linkHash != flat.linkHash) return false;
+        if (Double.compare(flat.area, area) != 0) return false;
+        return Double.compare(flat.price, price) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return linkHash;
     }
 }

@@ -1,28 +1,24 @@
 package com.webpostparser.model;
 
 import com.webpostparser.parserservice.comodity.ComodityType;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * Created by pord on 08.07.17..
  */
-@Component
-public class DaoFactory implements ApplicationContextAware {
-    private static ApplicationContext context;
+@Configuration
+public class DaoFactory {
 
-    public DaoFactoryInterface createDao(ComodityType type) {
+    @Autowired
+    PropertyDao propertyDao;
+
+    public DaoCommoditynterface createDao(ComodityType type) {
         switch (type) {
             case FLAT:
             case HOUSE:
-                return context.getBean(FlatsDao.class);
+                return propertyDao;
         }
         return null;
-    }
-
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        context = applicationContext;
     }
 }
